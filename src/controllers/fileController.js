@@ -6,6 +6,17 @@ const { UPLOADS_DIR } = require("../middlewares/uploadMiddleware");
 
 const uploadFiles = async (req, res) => {
   try {
+
+    // changes
+    console.log("=== UPLOAD HIT ===");
+    console.log("Origin:", req.headers.origin);
+    console.log(
+      "Files received:",
+      req.files?.map((f) => f.originalname),
+    );
+
+    // changes
+
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ error: "No files uploaded" });
     }
@@ -19,6 +30,10 @@ const uploadFiles = async (req, res) => {
     }));
 
     await FileShare.create({ inviteCode, files: filesData });
+
+    // changes
+    console.log("Upload success — inviteCode:", inviteCode);
+
     res.json({ inviteCode });
 
   } catch (error) {
